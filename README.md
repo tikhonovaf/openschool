@@ -1,2 +1,1 @@
-# openschool
-openschool
+<p><span style="color:#871094;"><i># Задание 1: Система учета времени выполнения методов</i></span><br>openschool<br><br>Приложение содержит:<br>&nbsp; &nbsp;Аннотации:<br>&nbsp; &nbsp; &nbsp; &nbsp;@TrackTime &nbsp;- для синхронного отслеживания времени выполнения методов<br>&nbsp; &nbsp; &nbsp; &nbsp;@TrackAsyncTime - - для асинхронного отслеживания времени выполнения методов<br>&nbsp;</p>
