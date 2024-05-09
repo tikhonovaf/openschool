@@ -56,7 +56,7 @@ public class ValidateException extends RuntimeException {
      * @return - исключение
      */
     public static ValidateException notFound(String entityName, Long  entityId) {
-        String message = "Не найден объект \"" + entityName + "\" с идентификатором = " + Long.toString(entityId);
+        String message = "Не найден объект '" + entityName + "' с идентификатором = " + Long.toString(entityId);
         return new ValidateException(message, HttpStatus.NOT_FOUND);
     }
 
@@ -67,7 +67,7 @@ public class ValidateException extends RuntimeException {
      * @return - исключение
      */
     public static ValidateException notFoundByCode(String entityName, String code) {
-        String message = "Не найден объект \"" + entityName + "\" с кодом = " + code;
+        String message = "Не найден объект '" + entityName + "' с кодом = " + code;
         return new ValidateException(message, HttpStatus.NOT_FOUND);
     }
 

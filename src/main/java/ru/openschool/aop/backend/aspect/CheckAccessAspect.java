@@ -29,6 +29,11 @@ public class CheckAccessAspect {
     private final UserService userService;
     private final  AccessRepository accessRepository;
 
+    /**
+     * Проверка доступа к методу на основе роли текущего пользователя
+     * и заданных в атрибутах аннотации ресурсе и выполняемом действии
+     *
+     */
     @Before("execution(* ru.openschool.aop.backend.service.*.*(..)) ")
     public void beforeInvocation(JoinPoint joinPoint) throws Exception {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();

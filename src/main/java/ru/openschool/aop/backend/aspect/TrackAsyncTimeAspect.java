@@ -33,8 +33,12 @@ public class TrackAsyncTimeAspect {
 
     @Around("methodsWithAnnotaion() && serviceMethods()")
 
+    /**
+     * Определение времени выполнения метода, помеченного аннотацией @TrackAsyncTime и запись результата в БД
+     *
+     */
     @Async
-    public Object asyncRunner(ProceedingJoinPoint proceedingJoinPoint) {
+    public Object asyncTrackMethodsExecutionTime(ProceedingJoinPoint proceedingJoinPoint) {
         long startTime = System.currentTimeMillis();
         Object result = null;
         String methodName = proceedingJoinPoint.getSignature().getName();

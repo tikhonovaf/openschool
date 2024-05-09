@@ -30,6 +30,10 @@ public class TrackTimeAspect {
 
     @Around("methodsWithAnnotaion() && serviceMethods()")
 
+    /**
+     * Определение времени выполнения метода, помеченного аннотацией @Trackime и запись результата в БД
+     *
+     */
     public Object trackMethodsExecutionTime(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
 
         long startTime = System.currentTimeMillis();

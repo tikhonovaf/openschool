@@ -23,6 +23,7 @@ public class UserService {
 
     /**
      * Определение текущего пользователя
+     * @return текущий пользователь
      */
     public MigrUser getCurrentUser() {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())

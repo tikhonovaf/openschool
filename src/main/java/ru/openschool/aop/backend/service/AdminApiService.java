@@ -41,7 +41,7 @@ public class AdminApiService implements AdminApiDelegate {
                         .stream()
                         .map(roleMapper::fromEntityToDto)
                         .collect(Collectors.toList());
-        return ResponseEntity.ok(null);
+        return ResponseEntity.ok(result);
     }
 
     /**

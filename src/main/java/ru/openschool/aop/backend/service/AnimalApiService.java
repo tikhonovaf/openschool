@@ -19,6 +19,7 @@ import ru.openschool.aop.backend.dto.AnimalInDto;
 import ru.openschool.aop.backend.dto.AnimalViewDto;
 import ru.openschool.aop.backend.dto.RefRecordDto;
 import ru.openschool.aop.backend.dto.RefRecordInDto;
+import ru.openschool.aop.backend.exception.ValidateException;
 import ru.openschool.aop.backend.mapper.AnimalMapper;
 import ru.openschool.aop.backend.mapper.RoleMapper;
 import ru.openschool.aop.backend.model.Animal;
@@ -52,6 +53,7 @@ public class AnimalApiService implements AnimalApiDelegate {
     /**
      * POST /animal/animals : Добавление животного
      *
+     * @param animalInDto Данные о животном
      * @return Животное (status code 200)
      */
     @Override
@@ -67,11 +69,11 @@ public class AnimalApiService implements AnimalApiDelegate {
     /**
      * POST /animal/animalTypes : Добавление типа животных
      *
+     * @param refRecordInDto Данные о типе животного
      * @return Тип животного (status code 200)
-     * @see AnimalApi#addAnimalType
      */
     @Override
-    public  ResponseEntity<RefRecordDto> addAnimalType(RefRecordInDto refRecordInDto) {
+    public ResponseEntity<RefRecordDto> addAnimalType(RefRecordInDto refRecordInDto) {
 
         AnimalType animalType = animalMapper.fromDtoToEntity(refRecordInDto);
         animalTypeRepository.save(animalType);
@@ -90,10 +92,14 @@ public class AnimalApiService implements AnimalApiDelegate {
      * @see AnimalApi#getAnimal
      */
     @Override
-    public  ResponseEntity<AnimalViewDto> getAnimal(Long id) {
-        AnimalViewDto result = animalMapper
-                .fromViewToDto(animalViewRepository.findById(id).get());
-        return ResponseEntity.ok(result);
+    public ResponseEntity<AnimalViewDto> getAnimal(Long id) {
+        if (animalViewRepository.findById(id).isPresent()) {
+            AnimalViewDto result = animalMapper
+                    .fromViewToDto(animalViewRepository.findById(id).get());
+            return ResponseEntity.ok(result);
+        } else {
+            throw ValidateException.notFound("Животное", id);
+        }
     }
 
     /**
@@ -101,13 +107,17 @@ public class AnimalApiService implements AnimalApiDelegate {
      *
      * @param id Идентификатор (required)
      * @return Тип животного (status code 200)
-     * @see AnimalApi#getAnimalType
      */
     @Override
-    public  ResponseEntity<RefRecordDto> getAnimalType(Long id) {
-        RefRecordDto result = animalMapper
-                .fromEntityToDto(animalTypeRepository.findById(id).get());
-        return ResponseEntity.ok(result);
+    public ResponseEntity<RefRecordDto> getAnimalType(Long id) {
+        if (animalTypeRepository.findById(id).isPresent()) {
+            RefRecordDto result = animalMapper
+                    .fromEntityToDto(animalTypeRepository.findById(id).get());
+            return ResponseEntity.ok(result);
+        } else {
+            throw ValidateException.notFound("Тип животного", id);
+        }
+
     }
 
     /**
@@ -150,36 +160,37 @@ public class AnimalApiService implements AnimalApiDelegate {
      * PATCH /animal/animals/{id} : Изменение животного
      *
      * @param id Идентификатор (required)
+     * @param animalInDto Данные о животном
      * @return Животное (status code 200)
      */
     @Override
     @UserAccess(action = ActionId.FULL, resource = ResourceId.ANIMAL)
     @TrackTime
-    public  ResponseEntity<AnimalViewDto> modifyAnimal(Long id,
-                                                       AnimalInDto animalInDto) {
+    public ResponseEntity<AnimalViewDto> modifyAnimal(Long id,
+                                                      AnimalInDto animalInDto) {
         if (animalRepository.findById(id).isPresent()) {
             Animal entity = animalRepository.findById(id).get();
             Animal entityNew = animalMapper.fromDtoToEntity(animalInDto);
             CoreUtil.patch(entityNew, entity);
             animalRepository.save(entity);
-
             AnimalViewDto result = animalMapper
                     .fromViewToDto(animalViewRepository.findById(entity.getId()).get());
             return ResponseEntity.ok(result);
-
+        } else {
+            throw ValidateException.notFound("Животное", id);
         }
-        return ResponseEntity.noContent().build();
     }
 
     /**
      * PATCH /animal/animalTypes/{id} : Изменение типа животных
      *
      * @param id Идентификатор (required)
+     * @param refRecordInDto Данные о типе животного
      * @return Тип животного (status code 200)
      */
     @Override
-    public  ResponseEntity<RefRecordDto> modifyAnimalType(Long id,
-                                                          RefRecordInDto refRecordInDto) {
+    public ResponseEntity<RefRecordDto> modifyAnimalType(Long id,
+                                                         RefRecordInDto refRecordInDto) {
         if (animalTypeRepository.findById(id).isPresent()) {
             AnimalType entity = animalTypeRepository.findById(id).get();
             AnimalType entityNew = animalMapper.fromDtoToEntity(refRecordInDto);
@@ -188,8 +199,9 @@ public class AnimalApiService implements AnimalApiDelegate {
             RefRecordDto result = animalMapper
                     .fromEntityToDto(animalTypeRepository.findById(entity.getId()).get());
             return ResponseEntity.ok(result);
+        } else {
+            throw ValidateException.notFound("Животное", id);
         }
-        return ResponseEntity.noContent().build();
     }
 }
 
