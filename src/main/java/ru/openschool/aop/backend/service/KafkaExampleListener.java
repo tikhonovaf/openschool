@@ -1,8 +1,5 @@
 package ru.openschool.aop.backend.service;
 
-import com.example.kafkaexample.model.Bar2;
-import com.example.kafkaexample.model.Foo1;
-import com.example.kafkaexample.model.Foo2;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.DltHandler;
@@ -14,6 +11,9 @@ import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.stereotype.Service;
+import ru.openschool.aop.backend.model.Bar2;
+import ru.openschool.aop.backend.model.Foo1;
+import ru.openschool.aop.backend.model.Foo2;
 
 import java.util.List;
 

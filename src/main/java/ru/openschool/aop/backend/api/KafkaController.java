@@ -1,7 +1,6 @@
 package ru.openschool.aop.backend.api;
 
-import com.example.kafkaexample.model.Bar1;
-import com.example.kafkaexample.model.Foo1;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -9,6 +8,8 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ru.openschool.aop.backend.model.Bar1;
+import ru.openschool.aop.backend.model.Foo1;
 
 @RestController
 @RequiredArgsConstructor
