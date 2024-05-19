@@ -47,6 +47,14 @@ spring:
             max-request-size: 150MB
     kafka:
         producer:
+            key-serializer: org.apache.kafka.common.serialization.StringSerializer
             value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
         consumer:
-            value-deserializer: org.apache.kafka.common.serialization.ByteArrayDeserializer
+#            value-deserializer: org.apache.kafka.common.serialization.ByteArrayDeserializer
+            value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+            key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+            properties:
+                spring:
+                    json:
+                        trusted:
+                            packages: '*'
