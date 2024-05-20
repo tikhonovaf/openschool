@@ -3,12 +3,11 @@ package ru.openschool.aop.backend.model;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
-// import javax.validation.constraints.NotNull;
 
 /**
  * Created by Tikhonov Arkadiy
@@ -16,7 +15,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Getter
 @Setter
-public class Resource {
+public class VmMetric {
 
     /**
      * Идентификатор
@@ -26,9 +25,20 @@ public class Resource {
     Long id;
 
     /**
-     * Наименование
+     * Наименование Виртуальной машины
      */
     @NotNull
-    String name;
+    String vmName;
+
+    /**
+     * Тип
+     */
+    @ManyToOne
+    MetricType metricType;
+
+    /**
+     * Значение метрики
+     */
+    Long value;
 
 }

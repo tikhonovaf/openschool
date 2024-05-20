@@ -6,7 +6,6 @@ import lombok.Setter;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -15,32 +14,18 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Getter
 @Setter
-public class AnimalView {
+public class MetricType {
 
     /**
      * Идентификатор
      */
     @Id
+    @GeneratedValue
     Long id;
 
     /**
      * Наименование
      */
+    @NotNull
     String name;
-
-    /**
-     * Идентифткатор типа
-     */
-    Long animalTypeId;
-
-    /**
-     * НГаименование типа
-     */
-    String animalTypeName;
-
-    /**
-     * Количество ног
-     */
-    Long legs;
-
 }
